@@ -73,7 +73,8 @@ const howManyPizzaToOrder = (maxSlices, pizzaTypes, possibleNumbers) => {
     return (isExceeding) ? possibleNumbers : howManyPizzaToOrder(maxSlices, pizzaTypes, possibleNumbers);
 }
 
-console.log("Testing branch------------");
+console.log("Master branch------------");
+console.log("Master branch------------");
 
 pizzaToOrder = calculateOrderNumber(maxSlices, pizzaTypeCount, pizzaTypes);
 
