@@ -1,7 +1,7 @@
 
 
 /** @var number - Maximum count of slices */
-let maxSlices = 10;
+let maxSlices = 17;
 
 /** @var number - Pizza type count*/
 let pizzaTypeCount = 4;
@@ -35,32 +35,35 @@ const calculateOrderNumber = (maxSlices, pizzaTypeCount, pizzaTypes) => {
 */
 const howManyPizzaToOrder = (maxSlices, pizzaTypes, possibleNumbers) => {
     // Initial loop
-    if (possibleNumbers.length == 0)
-        possibleNumbers.push({"indexes": [], "total" : 0, finish: false});
 
-    possibleNumbers.forEach( (val, i) => {
-        
-    });
-
-    possibleNumbers = possibleNumbers.map( eachNumber => {
-        // if curr total pieces is less than maxSlices, proceed adding more pieces
-        if (eachNumber.total < maxSlices){
-            pizzaTypes.forEach( (v, i) => {
-                const found = (eachNumber.indexes.find( el => el == i) != undefined);
-                if (!found && eachNumber.total + v < maxSlices){
-                    
-                    eachNumber.indexes.push(i);
-                    eachNumber.total += v;
-
-                } else
-                    eachNumber.finish = true;
+    if (possibleNumbers.length == 0){
+        pizzaTypes.forEach( (val, i) => {
+            pizzaTypes.forEach( (val_sub, k) => {
+                if (i != k)
+                    possibleNumbers.push({"indexes": [i, k], "total" : val + val_sub, finish: false});
             });
-        }else
-            eachNumber.finish = true;
+        });
+    }
+    // Second loop
+    else{
+        possibleNumbers = possibleNumbers.map( eachNumber => {
+            // if curr total pieces is less than maxSlices, proceed adding more pieces
+            if (eachNumber.total < maxSlices){
+                pizzaTypes.forEach( (v, i) => {
+                    const found = (eachNumber.indexes.find( el => el == i) != undefined);
+                    console.log( found + "---"+ i + ". " + ( eachNumber.total + v) + " <= " + maxSlices );
+                    if (!found && (eachNumber.total + v <= maxSlices) ){
+                        eachNumber.indexes.push(i);
+                        eachNumber.total += eachNumber.total + v;
+                    } else
+                        eachNumber.finish = true;
+                });
+            }else
+                eachNumber.finish = true;
 
-        return eachNumber;
-    });
-    
+            return eachNumber;
+        });
+    }
 
     // Checking if it's exceeding or not
     let isExceeding = true;
