@@ -51,7 +51,6 @@ const howManyPizzaToOrder = (maxSlices, pizzaTypes, possibleNumbers) => {
             if (eachNumber.total < maxSlices){
                 pizzaTypes.forEach( (v, i) => {
                     const found = (eachNumber.indexes.find( el => el == i) != undefined);
-                    console.log( found + "---"+ i + ". " + ( eachNumber.total + v) + " <= " + maxSlices );
                     if (!found && (eachNumber.total + v <= maxSlices) ){
                         eachNumber.indexes.push(i);
                         eachNumber.total += eachNumber.total + v;
@@ -74,6 +73,7 @@ const howManyPizzaToOrder = (maxSlices, pizzaTypes, possibleNumbers) => {
     return (isExceeding) ? possibleNumbers : howManyPizzaToOrder(maxSlices, pizzaTypes, possibleNumbers);
 }
 
+console.log("Testing branch------------");
 
 pizzaToOrder = calculateOrderNumber(maxSlices, pizzaTypeCount, pizzaTypes);
 
