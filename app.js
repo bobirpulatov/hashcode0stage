@@ -1,7 +1,6 @@
 
-
 /** @var number - Maximum count of slices */
-let maxSlices = 17;
+let maxSlices = 19;
 
 /** @var number - Pizza type count*/
 let pizzaTypeCount = 4;
@@ -19,63 +18,7 @@ let pizzaTypes = [2, 5, 6, 8];
 */
 const calculateOrderNumber = (maxSlices, pizzaTypeCount, pizzaTypes) => {
     
-    // pizzaTypeCount should be equal to pizzaTypes.length
-    if (pizzaTypeCount != pizzaTypes.length)
-        return 0;
-
-    // If pizza slices is less or equal to maxSlices return all pizzaTypes
-    if (pizzaTypes.reduce( (total, each) => total += each, 0 ) <= maxSlices)
-        return { pizzaTypeCount, pizzaTypes}
-
-    return howManyPizzaToOrder(maxSlices, pizzaTypes, []);    
 }
-
-/**
- * 
-*/
-const howManyPizzaToOrder = (maxSlices, pizzaTypes, possibleNumbers) => {
-    // Initial loop
-
-    if (possibleNumbers.length == 0){
-        pizzaTypes.forEach( (val, i) => {
-            pizzaTypes.forEach( (val_sub, k) => {
-                if (i != k)
-                    possibleNumbers.push({"indexes": [i, k], "total" : val + val_sub, finish: false});
-            });
-        });
-    }
-    // Second loop
-    else{
-        possibleNumbers = possibleNumbers.map( eachNumber => {
-            // if curr total pieces is less than maxSlices, proceed adding more pieces
-            if (eachNumber.total < maxSlices){
-                pizzaTypes.forEach( (v, i) => {
-                    const found = (eachNumber.indexes.find( el => el == i) != undefined);
-                    if (!found && (eachNumber.total + v <= maxSlices) ){
-                        eachNumber.indexes.push(i);
-                        eachNumber.total += eachNumber.total + v;
-                    } else
-                        eachNumber.finish = true;
-                });
-            }else
-                eachNumber.finish = true;
-
-            return eachNumber;
-        });
-    }
-
-    // Checking if it's exceeding or not
-    let isExceeding = true;
-    possibleNumbers.forEach( eachNumber => {
-        if (!eachNumber.finish) isExceeding = false;
-    });
-
-    return (isExceeding) ? possibleNumbers : howManyPizzaToOrder(maxSlices, pizzaTypes, possibleNumbers);
-}
-
-console.log("Master branch------------");
-console.log("Master branch------------");
-
 
 pizzaToOrder = calculateOrderNumber(maxSlices, pizzaTypeCount, pizzaTypes);
 
