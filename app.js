@@ -1,7 +1,6 @@
 
-
 /** @var number - Maximum count of slices */
-let maxSlices = 17;
+let maxSlices = 19;
 
 /** @var number - Pizza type count*/
 let pizzaTypeCount = 4;
@@ -9,74 +8,31 @@ let pizzaTypeCount = 4;
 /** @var array - Slice count in each pizza */
 let pizzaTypes = [2, 5, 6, 8];
 
-/**
- * Calculate max number of pizza to order
- * @param {number} maxSlices - Maximum amount of pizza slices
- * @param {number} pizzaTypeCount - Count of pizza types in pizzaria
- * @param {number[]} pizzaTypes  - Pizza types with count of slices in array
- * @see howManyPizzaToOrder - Sub func for recursive calculation
- * @returns Obj
-*/
-const calculateOrderNumber = (maxSlices, pizzaTypeCount, pizzaTypes) => {
-    
-    // pizzaTypeCount should be equal to pizzaTypes.length
-    if (pizzaTypeCount != pizzaTypes.length)
-        return 0;
 
-    // If pizza slices is less or equal to maxSlices return all pizzaTypes
-    if (pizzaTypes.reduce( (total, each) => total += each, 0 ) <= maxSlices)
-        return { pizzaTypeCount, pizzaTypes}
+// Given array
+let arr = [
+    [1, 4, 6, 8],
+    [3, 5, 9, 1],
+    [8, 7, 3, 5]
+];
 
-    return howManyPizzaToOrder(maxSlices, pizzaTypes, []);    
-}
+//
+const clockwiseRotationOfArray = (arr_) => {
+    let new_arr = [];
 
-/**
- * 
-*/
-const howManyPizzaToOrder = (maxSlices, pizzaTypes, possibleNumbers) => {
-    // Initial loop
+    for( let i=0; i<arr_[0].length; i++){
+        let temp_storage = [];
 
-    if (possibleNumbers.length == 0){
-        pizzaTypes.forEach( (val, i) => {
-            pizzaTypes.forEach( (val_sub, k) => {
-                if (i != k)
-                    possibleNumbers.push({"indexes": [i, k], "total" : val + val_sub, finish: false});
-            });
-        });
-    }
-    // Second loop
-    else{
-        possibleNumbers = possibleNumbers.map( eachNumber => {
-            // if curr total pieces is less than maxSlices, proceed adding more pieces
-            if (eachNumber.total < maxSlices){
-                pizzaTypes.forEach( (v, i) => {
-                    const found = (eachNumber.indexes.find( el => el == i) != undefined);
-                    if (!found && (eachNumber.total + v <= maxSlices) ){
-                        eachNumber.indexes.push(i);
-                        eachNumber.total += eachNumber.total + v;
-                    } else
-                        eachNumber.finish = true;
-                });
-            }else
-                eachNumber.finish = true;
+        for( let j=0; j<arr_.length; j++){
+            temp_storage.push(arr[j][i]);
+        }
 
-            return eachNumber;
-        });
+        new_arr.push(temp_storage.reverse());
     }
 
-    // Checking if it's exceeding or not
-    let isExceeding = true;
-    possibleNumbers.forEach( eachNumber => {
-        if (!eachNumber.finish) isExceeding = false;
-    });
-
-    return (isExceeding) ? possibleNumbers : howManyPizzaToOrder(maxSlices, pizzaTypes, possibleNumbers);
+    return new_arr;
 }
 
-console.log("Master branch------------");
-console.log("Master branch------------");
-console.log("Master branch------------");
+let result = clockwiseRotationOfArray(arr);
 
-pizzaToOrder = calculateOrderNumber(maxSlices, pizzaTypeCount, pizzaTypes);
-
-console.log(pizzaToOrder);
+console.log(result);
