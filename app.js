@@ -8,18 +8,31 @@ let pizzaTypeCount = 4;
 /** @var array - Slice count in each pizza */
 let pizzaTypes = [2, 5, 6, 8];
 
-/**
- * Calculate max number of pizza to order
- * @param {number} maxSlices - Maximum amount of pizza slices
- * @param {number} pizzaTypeCount - Count of pizza types in pizzaria
- * @param {number[]} pizzaTypes  - Pizza types with count of slices in array
- * @see howManyPizzaToOrder - Sub func for recursive calculation
- * @returns Obj
-*/
-const calculateOrderNumber = (maxSlices, pizzaTypeCount, pizzaTypes) => {
-    
+
+// Given array
+let arr = [
+    [1, 4, 6, 8],
+    [3, 5, 9, 1],
+    [8, 7, 3, 5]
+];
+
+//
+const clockwiseRotationOfArray = (arr_) => {
+    let new_arr = [];
+
+    for( let i=0; i<arr_[0].length; i++){
+        let temp_storage = [];
+
+        for( let j=0; j<arr_.length; j++){
+            temp_storage.push(arr[j][i]);
+        }
+
+        new_arr.push(temp_storage.reverse());
+    }
+
+    return new_arr;
 }
 
-pizzaToOrder = calculateOrderNumber(maxSlices, pizzaTypeCount, pizzaTypes);
+let result = clockwiseRotationOfArray(arr);
 
-console.log(pizzaToOrder);
+console.log(result);
